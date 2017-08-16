@@ -31,7 +31,7 @@ let test_ad dir lst =
   let rec tolist arr i = if i = Array.length arr then []
       else (arr.(i),arr.(i+1))::(tolist arr (i+2)) in
   let tranc = .<fun x -> .~(gen_ad dir (n * 2) .<x>.)>. in
-  let tran = (.!tranc) (arr) in
+  let tran = (Runcode.run tranc) (arr) in
   tolist tran 0
 
   

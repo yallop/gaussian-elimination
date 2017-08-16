@@ -1,8 +1,8 @@
-
-module T = Domains_sig.S(struct type ('a, 'b) rep = ('a, 'b) code end)
-open T
-
+open Prelude
 open Domains_common
+
+module T = Domains_sig.S(struct type 'b rep = 'b code end)
+open T
 
 (* Naming conventions: 
    Functions that end in M take monads as arguments and partially
@@ -25,7 +25,7 @@ open Domains_common
    we have to repeat ourselves a lot *)
 module FloatDomainL = struct
     include FloatDomain
-    type 'a vc = ('a,v) code
+    type vc = v code
     let zeroL = .< 0. >.  
     let oneL = .< 1. >. 
     let (+^) x y = .<.~x +. .~y>. 
@@ -41,7 +41,7 @@ end
    we have to repeat ourselves a lot *)
 module IntegerDomainL = struct
     include IntegerDomain
-    type 'a vc = ('a,v) code
+    type vc = v code
     let zeroL = .< 0 >.  
     let oneL = .< 1 >. 
     let (+^) x y = .<.~x + .~y>. 
@@ -58,7 +58,7 @@ end
    we have to repeat ourselves a lot *)
 module RationalDomainL = struct
     include RationalDomain
-    type 'a vc = ('a,v) code
+    type vc = v code
     let zeroL = .< zero >.  
     let oneL = .< one >. 
     let (+^) x y = .< Num.add_num .~x .~y >.
@@ -72,7 +72,7 @@ end
 
 module ZpMakeL = functor(P:sig val p:int end) -> struct
     include ZpMake(P)
-    type 'a vc = ('a,v) code
+    type vc = v code
     let zeroL = .< zero >.  
     let oneL = .< one >. 
     let (+^) x y = .< plus .~x .~y >.
@@ -88,12 +88,12 @@ module GenericArrayContainer(Dom:DOMAINL) =
   struct
   module Dom = Dom
   type contr = Dom.v array array (* Array of rows *)
-  type 'a vc = ('a,contr) code
-  type 'a vo = ('a,Dom.v) code
+  type vc = contr code
+  type vo = Dom.v code
   let getL x n m = .< (.~x).(.~n).(.~m) >.
   let dim2 x = .< Array.length .~x >.       (* number of rows *)
   let dim1 x = .< Array.length (.~x).(0) >. (* number of cols *)
-  let mapper (g:('a vo -> 'a vo) option) a = match g with
+  let mapper (g:(vo -> vo) option) a = match g with
       | Some f -> .< Array.map (fun x -> Array.map (fun z -> .~(f .<z>.)) x) .~a >.
       | None   -> a
   let copy = (fun a -> .<Array.map (fun x -> Array.copy x) 
@@ -127,16 +127,12 @@ module GenericArrayContainer(Dom:DOMAINL) =
   let col_head_set x n m y = .< (.~x).(.~n).(.~m) <- .~y >.
 end
 
-(* Matrix layed out row after row, in a C fashion, using a record
-   as intermediary *)
-type 'a container2dfromvector = {arr:('a array); n:int; m:int}
-
 module GenericVectorContainer(Dom:DOMAINL) =
   struct
   module Dom = Dom
   type contr = Dom.v container2dfromvector
-  type 'a vc = ('a,contr) code
-  type 'a vo = ('a,Dom.v) code
+  type vc = contr code
+  type vo = Dom.v code
   let getL x i j = .< ((.~x).arr).(.~i* (.~x).m + .~j) >.
   let dim2 x = .< (.~x).n >.
   let dim1 x = .< (.~x).m >.
@@ -198,16 +194,12 @@ module GenericVectorContainer(Dom:DOMAINL) =
   let col_head_set x n m y = .< ((.~x).arr).(.~n* (.~x).m + .~m) <- .~y >.
 end
 
-(* Matrix layed out column after column, in a Fortran fashion, using an
-   algebraic type as intermediary *)
-type 'a container2dfromFvector = FortranVector of ('a array * int * int)
-
 module FortranVectorContainer(Dom:DOMAINL):CONTAINER2D =
   struct
   module Dom = Dom
   type contr = Dom.v container2dfromFvector
-  type 'a vc = ('a,contr) code
-  type 'a vo = ('a,Dom.v) code
+  type vc = contr code
+  type vo = Dom.v code
   let unpack z f = .< match .~z with 
       FortranVector(x,n,m) -> .~(f .<x>. .<n>. .<m>. ) >.
   let getL z i j = unpack z (fun x n _ -> .< (.~x).(.~i * .~n + .~j) >. )
@@ -335,4 +327,3 @@ module Array2D =
   let dim2 x = .< Array.length x >.       (* number of rows *)
   let dim1 x = .< Array.length (x).(0) >. (* number of cols *)
 end
-

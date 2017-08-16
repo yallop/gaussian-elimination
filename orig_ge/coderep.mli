@@ -1,139 +1,127 @@
-open Prelude
-
 (*module type T = functor(R: Abstractrep.T) -> sig *)
 module type T = sig
+open Prelude
 (* Abstract Representation of ``code'' of ``code'' *)
-type (+'a,'b) abstract (* = ('a, 'b) R.abstract *)
+type 'b abstract (* = 'b R.abstract *)
 
-val retN : ('a, 'b) abstract -> ('s -> ('s -> ('a, 'b) abstract -> ('a, 'w)
-abstract ) -> ('a, 'w) abstract)
+val retN : 'b abstract -> 
+    ('s -> ('s -> 'b abstract -> 'w abstract ) -> 'w abstract)
 
-val seq : ('a, 'b) abstract -> ('a, 'c) abstract -> ('a, 'c) abstract
-val seqL :
-  ('a, 'b) abstract -> ('a, 'c) abstract -> 'd -> ('d -> ('a, 'c) abstract -> 'e) -> 'e
+val seq : 'b abstract -> 'c abstract -> 'c abstract
+val seqL : 'b abstract -> 'c abstract -> 'd -> ('d -> 'c abstract -> 'e) -> 'e
 val seqM :
-  ('a -> ('b -> 'c -> 'c) -> ('d, 'e) abstract) ->
-  ('a -> ('f -> 'g -> 'g) -> ('d, 'h) abstract) ->
-  'a -> ('a -> ('d, 'h) abstract -> 'i) -> 'i
+  ('a -> ('b -> 'c -> 'c) -> 'e abstract) ->
+  ('a -> ('f -> 'g -> 'g) -> 'h abstract) ->
+  'a -> ('a -> 'h abstract -> 'i) -> 'i
 
-val optSeq : ('a, 'b) abstract -> ('a, 'b) abstract option -> ('a, 'b) abstract
+val optSeq : 'b abstract -> 'b abstract option -> 'b abstract
 
 val optSeqM : 
-  ('a -> ('a -> ('d,'e) abstract -> ('d,'e) abstract) -> ('d, 'e) abstract) ->
-  ('a -> ('a -> 'g -> 'g) -> ('d, 'e) abstract) option ->
-  'a -> ('a -> ('d, 'e) abstract -> ('d,'e) abstract) -> ('d,'e) abstract
+  ('a -> ('a -> 'e abstract -> 'e abstract) -> 'e abstract) ->
+  ('a -> ('a -> 'g -> 'g) -> 'e abstract) option ->
+  'a -> ('a -> 'e abstract -> 'e abstract) -> 'e abstract
 
 val ifM :
-  ('a, bool) abstract ->
-  ('b -> ('c -> 'd -> 'd) -> ('a, 'e) abstract) ->
-  ('b -> ('f -> 'g -> 'g) -> ('a, 'e) abstract) ->
-  'b -> ('b -> ('a, 'e) abstract -> 'h) -> 'h
+  bool abstract ->
+  ('b -> ('c -> 'd -> 'd) -> 'e abstract) ->
+  ('b -> ('f -> 'g -> 'g) -> 'e abstract) ->
+  'b -> ('b -> 'e abstract -> 'h) -> 'h
 val rshiftM : ('a -> 'b) -> 'a -> ('a -> 'b -> 'c) -> 'c
 val whenM :
-  ('a, bool) abstract ->
-  ('b -> ('c -> 'd -> 'd) -> ('a, unit) abstract) ->
-  'b -> ('b -> ('a, unit) abstract -> 'e) -> 'e
+  bool abstract ->
+  ('b -> ('c -> 'd -> 'd) -> unit abstract) ->
+  'b -> ('b -> unit abstract -> 'e) -> 'e
 val loopM :
-  ('a, int) abstract ->
-  ('a, int) abstract ->
-  (('a, int) abstract -> 'b -> ('c -> 'd -> 'd) -> ('a, 'e) abstract) ->
+  int abstract ->
+  int abstract ->
+  (int abstract -> 'b -> ('c -> 'd -> 'd) -> 'e abstract) ->
   dir ->
-  'b -> ('b -> ('a, unit) abstract -> 'f) -> 'f
+  'b -> ('b -> unit abstract -> 'f) -> 'f
 val whileM :
-  ('a, bool) abstract ->
-  ('b -> ('c -> 'd -> 'd) -> ('a, 'e) abstract) ->
-  'b -> ('b -> ('a, unit) abstract -> 'f) -> 'f
+  bool abstract ->
+  ('b -> ('c -> 'd -> 'd) -> 'e abstract) ->
+  'b -> ('b -> unit abstract -> 'f) -> 'f
 val matchM :
-  ('a, 'b option) abstract ->
-  (('a, 'b) abstract -> 'c -> ('d -> 'e -> 'e) -> ('a, 'f) abstract) ->
-  ('c -> ('g -> 'h -> 'h) -> ('a, 'f) abstract) ->
-  'c -> ('c -> ('a, 'f) abstract -> 'i) -> 'i
+  'b option abstract ->
+  ('b abstract -> 'c -> ('d -> 'e -> 'e) -> 'f abstract) ->
+  ('c -> ('g -> 'h -> 'h) -> 'f abstract) ->
+  'c -> ('c -> 'f abstract -> 'i) -> 'i
 val genrecloop :
-  (('a, 'b -> 'c) abstract ->
-   ('a, 'b) abstract -> 'd -> ('e -> 'f -> 'f) -> ('a, 'c) abstract) ->
-  ('a, 'b) abstract -> 'd -> ('d -> ('a, 'c) abstract -> 'g) -> 'g
-val lift : 'a -> ('b, 'a) abstract
-val liftRef : ('a, 'b) abstract -> ('a, 'b ref) abstract
-val liftGet : ('a, 'b ref) abstract -> ('a, 'b) abstract
-val unitL : 'a -> ('a -> ('b, unit) abstract -> 'c) -> 'c
-val liftPair : ('a, 'b * 'c) abstract -> ('a, 'b) abstract * ('a, 'c) abstract
+  (('b -> 'c) abstract ->
+   'b abstract -> 'd -> ('e -> 'f -> 'f) -> 'c abstract) ->
+  'b abstract -> 'd -> ('d -> 'c abstract -> 'g) -> 'g
+val lift : 'a -> 'a abstract
+val liftRef : 'b abstract -> 'b ref abstract
+val liftGet : 'b ref abstract -> 'b abstract
+val unitL : 'a -> ('a -> unit abstract -> 'c) -> 'c
+val liftPair : ('b * 'c) abstract -> 'b abstract * 'c abstract
 val liftPPair :
-  ('a, ('b * 'c) * 'd) abstract -> ('a, 'b) abstract * ('a, 'c) abstract * ('a,
-  'd) abstract
+  (('b * 'c) * 'd) abstract -> 'b abstract * 'c abstract * 'd abstract
 module Logic :
   sig
-    val notL : ('a, bool) abstract -> ('a, bool) abstract
-    val equalL : ('a, 'b) abstract -> ('a, 'b) abstract -> ('a, bool) abstract
-    val notequalL : ('a, 'b) abstract -> ('a, 'b) abstract -> ('a, bool)
+    val notL : bool abstract -> bool abstract
+    val equalL : 'b abstract -> 'b abstract -> bool abstract
+    val notequalL : 'b abstract -> 'b abstract -> bool
     abstract
-    val andL : ('a, bool) abstract -> ('a, bool) abstract -> ('a, bool) abstract
+    val andL : bool abstract -> bool abstract -> bool abstract
   end
 module Idx :
   sig
-    val zero : ('a, int) abstract
-    val one : ('a, int) abstract
-    val minusone : ('a, int) abstract
-    val succ : ('a, int) abstract -> ('a, int) abstract
-    val pred : ('a, int) abstract -> ('a, int) abstract
-    val less : ('a, 'b) abstract -> ('a, 'b) abstract -> ('a, bool) abstract
-    val uminus : ('a, int) abstract -> ('a, int) abstract
-    val add : ('a, int) abstract -> ('a, int) abstract -> ('a, int) abstract
-    val minusoneL : 'a -> ('a -> ('b, int) abstract -> 'c) -> 'c
+    val zero : int abstract
+    val one : int abstract
+    val minusone : int abstract
+    val succ : int abstract -> int abstract
+    val pred : int abstract -> int abstract
+    val less : 'b abstract -> 'b abstract -> bool abstract
+    val uminus : int abstract -> int abstract
+    val add : int abstract -> int abstract -> int abstract
+    val minusoneL : 'a -> ('a -> int abstract -> 'c) -> 'c
   end
 module Maybe :
   sig
-    val just : ('a, 'b) abstract -> ('a, 'b option) abstract
-    val none : ('a, 'b option) abstract
+    val just : 'b abstract -> 'b option abstract
+    val none : 'b option abstract
   end
 val applyMaybe : ('a -> 'a) option -> 'a -> 'a
 module Tuple :
   sig
-    val tup2 : ('a, 'b) abstract -> ('a, 'c) abstract -> ('a, 'b * 'c) abstract
+    val tup2 : 'b abstract -> 'c abstract -> ('b * 'c) abstract
     val tup3 :
-      ('a, 'b) abstract ->
-      ('a, 'c) abstract -> ('a, 'd) abstract -> ('a, 'b * 'c * 'd) abstract
-    val tup4 :
-      ('a, 'b) abstract ->
-      ('a, 'c) abstract ->
-      ('a, 'd) abstract -> ('a, 'e) abstract -> ('a, 'b * 'c * 'd * 'e) abstract
+      'b abstract -> 'c abstract -> 'd abstract -> ('b * 'c * 'd) abstract
+    val tup4 : 'b abstract -> 'c abstract -> 'd abstract -> 
+               'e abstract -> ('b * 'c * 'd * 'e) abstract
   end
 module CList :
   sig
-    val nil : ('a, 'b list) abstract
-    val cons : ('a, 'b) abstract -> ('a, 'b list) abstract -> ('a, 'b list)
+    val nil : 'b list abstract
+    val cons : 'b abstract -> 'b list abstract -> 'b list
     abstract
   end
-val cunit : ('a, unit) abstract
+val cunit : unit abstract
 val update :
-  ('a, 'b ref) abstract -> (('a, 'b) abstract -> ('a, 'b) abstract) -> ('a,
-  unit) abstract
-val assign : ('a, 'b ref) abstract -> ('a, 'b) abstract -> ('a, unit) abstract
-val apply : ('a, 'b -> 'c) abstract -> ('a, 'b) abstract -> ('a, 'c) abstract
+  'b ref abstract -> ('b abstract -> 'b abstract) -> unit abstract
+val assign : 'b ref abstract -> 'b abstract -> unit abstract
+val apply : ('b -> 'c) abstract -> 'b abstract -> 'c abstract
 val updateM :
-  ('a, 'b ref) abstract ->
-  (('a, 'b) abstract -> ('a, 'b) abstract) ->
-  'c -> ('c -> ('a, unit) abstract -> 'd) -> 'd
+  'b ref abstract -> ('b abstract -> 'b abstract) ->
+  'c -> ('c -> unit abstract -> 'd) -> 'd
 val assignM :
-  ('a, 'b ref) abstract ->
-  ('a, 'b) abstract -> 'c -> ('c -> ('a, unit) abstract -> 'd) -> 'd
+  'b ref abstract ->
+  'b abstract -> 'c -> ('c -> unit abstract -> 'd) -> 'd
 val applyM :
-  ('a, 'b -> 'c) abstract ->
-  ('a, 'b) abstract -> 'd -> ('d -> ('a, 'c) abstract -> 'e) -> 'e
+  ('b -> 'c) abstract -> 'b abstract -> 'd -> ('d -> 'c abstract -> 'e) -> 'e
 module Transformers :
   sig
     val full_unroll :
-      int -> int -> (int -> ('a, unit) abstract) -> ('a, unit) abstract
+      int -> int -> (int -> unit abstract) -> unit abstract
   end
 
 module Array1Dim : sig
-  val init : ('a,int) abstract -> ('a, int array) abstract
-  val setL : ('a,int array) abstract -> ('a,int*int) abstract -> ('a,int array) abstract
+  val init : int abstract -> int array abstract
+  val setL : int array abstract -> (int*int) abstract -> int array abstract
 end
 
-(* This type is needed for the output, and is tracked during pivoting. *)
-type perm = RowSwap of (int * int) | ColSwap of (int*int)
-val liftRowSwap : 
-    ('a, int) abstract -> ('a, int) abstract -> ('a, perm) abstract
-val liftColSwap : 
-    ('a, int) abstract -> ('a, int) abstract -> ('a, perm) abstract
+val liftRowSwap : int abstract -> int abstract -> perm abstract
+val liftColSwap : int abstract -> int abstract -> perm abstract
+
 end

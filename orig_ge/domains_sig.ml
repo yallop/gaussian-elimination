@@ -5,7 +5,7 @@ type domain_kind = Domain_is_Ring | Domain_is_Field
 module S(T:
   sig
 	(* Representation type of values,  to be specified *)
-    type ('a, 'b) rep
+    type 'b rep
   end) = struct
 
 open T
@@ -28,39 +28,39 @@ end
 (* Lift *)
 module type DOMAINL = sig
   include DOMAIN
-  type 'a vc = ('a,v) rep
-  val zeroL : 'a vc
-  val oneL : 'a vc
-  val ( +^ ) : 'a vc -> 'a vc -> 'a vc
-  val ( *^ ) : 'a vc -> 'a vc -> 'a vc
-  val ( -^ ) : 'a vc -> 'a vc -> 'a vc
-  val uminusL : 'a vc -> 'a vc
-  val divL : 'a vc -> 'a vc -> 'a vc
-  val better_thanL : ('a vc -> 'a vc -> ('a,bool) rep) option
-  val normalizerL : ('a vc -> 'a vc) option
+  type vc = v rep
+  val zeroL : vc
+  val oneL : vc
+  val ( +^ ) : vc -> vc -> vc
+  val ( *^ ) : vc -> vc -> vc
+  val ( -^ ) : vc -> vc -> vc
+  val uminusL : vc -> vc
+  val divL : vc -> vc -> vc
+  val better_thanL : (vc -> vc -> bool rep) option
+  val normalizerL : (vc -> vc) option
 end 
 
 module type CONTAINER2D = sig
   module Dom:DOMAINL
   type contr
-  type 'a vc = ('a,contr) rep
-  type 'a vo = ('a,Dom.v) rep
-  val getL : 'a vc -> ('a,int) rep -> ('a,int) rep -> 'a vo
-  val dim1 : 'a vc -> ('a,int) rep
-  val dim2 : 'a vc -> ('a,int) rep
-  val mapper : ('a vo -> 'a vo) option -> 'a vc -> 'a vc
-  val copy : 'a vc -> 'a vc
-  val init : ('a,int) rep -> ('a, int) rep -> 'a vc
-  val augment : 'a vc -> ('a,int) rep -> ('a, int) rep -> 'a vc ->
-                ('a, int) rep -> 'a vc
-  val identity : ('a,int) rep -> ('a, int) rep -> 'a vc
-  val swap_rows_stmt : 'a vc -> ('a, int) rep option -> 
-                       ('a, int) rep -> ('a, int) rep -> ('a,unit) rep
-  val swap_cols_stmt : 'a vc -> ('a, int) rep -> ('a, int) rep -> 
-                       ('a,unit) rep
-  val row_head : 'a vc -> ('a, int) rep -> ('a, int) rep -> 'a vo
-  val col_head_set : 'a vc -> ('a,int) rep -> ('a,int) rep -> 'a vo -> 
-            ('a,unit) rep
+  type vc = contr rep
+  type vo = Dom.v rep
+  val getL : vc -> (int) rep -> (int) rep -> vo
+  val dim1 : vc -> (int) rep
+  val dim2 : vc -> (int) rep
+  val mapper : (vo -> vo) option -> vc -> vc
+  val copy : vc -> vc
+  val init : (int) rep -> ( int) rep -> vc
+  val augment : vc -> (int) rep -> (int) rep -> vc ->
+                (int) rep -> vc
+  val identity : (int) rep -> (int) rep -> vc
+  val swap_rows_stmt : vc -> (int) rep option -> 
+                       (int) rep -> (int) rep -> (unit) rep
+  val swap_cols_stmt : vc -> (int) rep -> (int) rep -> 
+                       (unit) rep
+  val row_head : vc -> (int) rep -> (int) rep -> vo
+  val col_head_set : vc -> (int) rep -> (int) rep -> vo -> 
+            (unit) rep
 end
 
 end

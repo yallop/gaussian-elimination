@@ -64,7 +64,7 @@ type rat = int * int (* j/n *)
 let rat_one = (0,1)
 
 (* The abstraction domain *)
-type 'a newfloats_aa = Code of rat * ('a,float) code * ('a,float) code
+type newfloats_aa = Code of rat * float code * float code
 
 (* *)
 let rec gcd a b =

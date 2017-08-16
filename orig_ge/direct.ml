@@ -1,7 +1,8 @@
-type ('a, 'b) abstract = unit -> 'b
+open Prelude
+
+type 'b abstract = unit -> 'b
 
 open StateCPSMonad
-open Prelude
 
 (* This one is very special! *)
 let retN a = fun s k -> fun () -> let t = a () in k s (fun () -> t) ()
@@ -157,12 +158,6 @@ let updateM a f = ret (update a f)
 let assignM a b = ret (assign a b)
 let applyM  f x = ret (apply f x)
 
-(* This type is needed for the output, and is tracked during pivoting. 
-   It's hard to find the right place for this lifting. If this
-   is moved to domans_*.ml modules, this code should be placed
-   into CONTAINER2D.
-*)
-type perm = RowSwap of (int * int) | ColSwap of (int*int)
 let liftRowSwap a b = fun () -> RowSwap (a (), b ())
 let liftColSwap a b = fun () -> ColSwap (a (), b ())
 

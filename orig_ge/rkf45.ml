@@ -1,9 +1,8 @@
 open StateCPSMonad
 
+open Prelude
 open Domains_code
 open Code
-
-type ('a, 'b) either = Left of 'a | Right of 'b
 
 (* runge kutta 4th order integration *)
 let evalrk45 x h yin f =

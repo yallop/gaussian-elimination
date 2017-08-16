@@ -1,11 +1,12 @@
-type ('a, 'b) abstract = ('a, 'b) code
+type 'b abstract = 'b code
 
 open StateCPSMonad
 open Prelude
+open Domains_common
 
 (* This one is very special! *)
-let retN (a : ('c,'v)code) : 
- (<classif: 'c; answer: ('c,'w)code; ..>,('c,'v)code) monad 
+let retN (a : 'v code) : 
+ (<answer: 'w code; ..>, 'v code) monad 
    = fun s k -> .<let t = .~a in .~(k s .<t>.)>.
 
 (* Naming conventions: 
@@ -75,7 +76,7 @@ let genrecloop gen rtarg = fun s k ->
 
 (* set up some very general algebra that can be reused though not
    so much in the current code (yet?) 
-type ('a,'b) abstract = Ground of 'b | Code of ('a, 'b) code
+type 'b abstract = Ground of 'b | Code of 'b code
 let concretize = function
     | Ground x -> .<x>.
     | Code x   -> x
@@ -158,12 +159,6 @@ let updateM a f = ret (update a f)
 let assignM a b = ret (assign a b)
 let applyM  f x = ret (apply f x)
 
-(* This type is needed for the output, and is tracked during pivoting. 
-   It's hard to find the right place for this lifting. If this
-   is moved to domans_*.ml modules, this code should be placed
-   into CONTAINER2D.
-*)
-type perm = RowSwap of (int * int) | ColSwap of (int*int)
 let liftRowSwap a b = .< RowSwap (.~a, .~b) >.
 let liftColSwap a b = .< ColSwap (.~a, .~b) >.
 

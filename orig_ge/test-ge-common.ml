@@ -7,6 +7,8 @@ module T0 = Foo(FloatDomainL);;
 module T1 = DivisionUpdate(GAC_F)(NoDet);;
 *)
 
+open Prelude
+
 module Z3 = ZpMakeL(struct let p = 3 end)
 module Z19 = ZpMakeL(struct let p = 19 end)
 

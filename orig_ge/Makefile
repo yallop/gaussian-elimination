@@ -82,9 +82,6 @@ rkf45.out: test-rkf45.ml rkf45.cmo mytop
 fft.out: test-fft.ml fft.cmo mytop
 	./mytop fft.cmo < $< > $@
 
-../camlp4/pa_monad.cmo:
-	(cd ../camlp4; make all)
-
 # Dependencies. Needed! Otherwise, old versions of files are compiled.
 
 ge.cmo :  stateCPSMonad.cmo prelude.cmo coderep.cmi domains_sig.cmo

@@ -1,5 +1,5 @@
-open StateCPSMonad
 open Prelude
+open StateCPSMonad
 
 type update_kind = FractionFree | DivisionBased
 
@@ -39,7 +39,7 @@ let orec_find ((_,_,name) as ip:(('a,'b) open_rec)) (s:'b list) : 'a =
   with Not_found -> failwith ("Failed to locate orec field: " ^ name)
 
 let mo_extend (ip:('a,'b) open_rec) (v:'a) : ('c, unit) monad =
-  let! s = fetch in store (orec_store ip v s)
+  let! s = fetch in (fun s' k -> store (orec_store ip v s) s' k)
 
 let mo_lookup (ip:('a,'b) open_rec) : ('c, 'a) monad =
   let! s = fetch in ret (orec_find ip s)
@@ -53,7 +53,7 @@ let mo_lookup (ip:('a,'b) open_rec) : ('c, 'a) monad =
 module LAMake(CODE: Coderep.T) = struct
 
 module D = Domains_sig.S(
-  struct type ('a, 'v) rep = ('a,'v) CODE.abstract end)
+  struct type 'v rep = 'v CODE.abstract end)
 open D
 open CODE
 
@@ -66,37 +66,17 @@ end
 
 (* Monad used in this module: 
    (abstract) code generation monad with open union state *)
-type ('pc,'p,'a) cmonad_constraint = unit
+type ('pc,'p) cmonad_constraint = unit
       constraint
-	  'p = <state : 's list; answer : ('a,'w) abstract>
+	  'p = <state : 's list; answer : 'w abstract>
       constraint
-          'pc = <classif : 'a; answer : 'w; state : 's; ..>
+          'pc = <answer : 'w; state : 's; ..>
 
-type ('pc,'v) cmonad = ('p,('a,'v) abstract) monad
-      constraint _ = ('pc,'p,'a) cmonad_constraint 
+type ('pc,'v) cmonad = ('p, 'v abstract) monad
+      constraint _ = ('pc,'p) cmonad_constraint 
 
-type ('pc,'v) omonad = ('p,('a,'v) abstract option) monad
-      constraint _ = ('pc,'p,'a) cmonad_constraint 
-
-(*
-
-type ('pc,'v) cmonad = 
-    ('p,('a,'v) abstract) monad
-      constraint
-	  'p = <state : 's list;
-                answer : ('a,'w) abstract>
-      constraint
-          'pc = <classif : 'a; answer : 'w; state : 's; ..>
-       
-(* We also use this variant, where we _might_ generate code *)
-type ('pc,'v) omonad = 
-    ('p,('a,'v) abstract option) monad
-      constraint
-	  'p = <state : 's list;
-                answer : ('a,'w) abstract>
-      constraint
-          'pc = <classif : 'a; answer : 'w; state : 's; ..>
-*)
+type ('pc,'v) omonad = ('p, 'v abstract option) monad
+      constraint _ = ('pc,'p) cmonad_constraint 
 
 (* moved from Infra (now Domains) so that the former uses no monads.
   The following code is generic over the containers anyway.
@@ -122,12 +102,12 @@ end
 (* Note how this module contains its own signature *)
 module TrackRank = 
   struct
-  type 'a lstate = ('a, int ref) abstract
+  type lstate = int ref abstract
     (* some magic for the proper visibility of identifiers *)
-  type 'a tag_lstate_ = [`TRan of 'a lstate ]
-  type 'a tag_lstate = 'a tag_lstate_
+  type tag_lstate_ = [`TRan of lstate ]
+  type tag_lstate = tag_lstate_
   type ('pc,'v) lm = ('pc,'v) cmonad
-    constraint 'pc = <state : [> 'a tag_lstate]; classif : 'a; ..>
+    constraint 'pc = <state : [> tag_lstate]; ..>
 
   let ip = (fun x -> `TRan x), (function `TRan x -> Some x | _ -> None),
            "TrackRank"
@@ -141,7 +121,7 @@ module TrackRank =
 
       (* The signature of the above *)
   module type RANK = sig
-    type 'a tag_lstate = 'a tag_lstate_
+    type tag_lstate = tag_lstate_
     val decl   : unit -> ('b, int ref) lm
     val succ   : unit -> ('b, unit) lm
     val fin    : unit -> ('b, int) lm
@@ -160,23 +140,23 @@ end
 
 module type PIVOTKIND = sig
   type perm_rep
-  type 'a ira = ('a, int) abstract
-  type 'a fra
-  type 'a pra = ('a, perm_rep) abstract
-  val add : 'a fra -> 'a pra -> 'a pra
-  val empty : 'a ira -> 'a pra
-  val rowrep : 'a ira -> 'a ira -> 'a fra
-  val colrep : 'a ira -> 'a ira -> 'a fra
+  type ira = int abstract
+  type fra
+  type pra = perm_rep abstract
+  val add : fra -> pra -> pra
+  val empty : ira -> pra
+  val rowrep : ira -> ira -> fra
+  val colrep : ira -> ira -> fra
 end
 
 module PermList = struct
   type flip_rep = perm
   type perm_rep = perm list
-  type 'a ira = ('a, int) abstract
-  type 'a fra = ('a, flip_rep) abstract
-  type 'a pra = ('a, perm_rep) abstract
+  type ira = int abstract
+  type fra = flip_rep abstract
+  type pra = perm_rep abstract
   let add x l = CList.cons x l
-  let empty _ = (CList.nil : 'a pra)
+  let empty _ = (CList.nil : pra)
   let rowrep x y = liftRowSwap x y
   let colrep x y = liftColSwap x y
 end
@@ -184,9 +164,9 @@ end
 module RowVectorPerm = struct
   type flip_rep = int*int
   type perm_rep = int array
-  type 'a ira = ('a, int) abstract
-  type 'a fra = ('a, flip_rep) abstract
-  type 'a pra = ('a, perm_rep) abstract
+  type ira = int abstract
+  type fra = flip_rep abstract
+  type pra = perm_rep abstract
   let add x l = Array1Dim.setL l x
   let empty n = Array1Dim.init n
   let rowrep x y = Tuple.tup2 x y
@@ -195,22 +175,21 @@ end
 
 module type TRACKPIVOT = sig
   type perm_rep
-  type 'a ira = ('a, int) abstract
-  type 'a fra
-  type 'a pra
-  type 'a lstate
+  type ira = int abstract
+  type fra
+  type pra
+  type lstate
   type 'pc pc_constraint = unit
-    constraint 'pc = <state : [> `TPivot of 'a lstate ]; classif : 'a; ..>
+    constraint 'pc = <state : [> `TPivot of lstate ]; ..>
   type ('pc,'v) lm = ('pc,'v) cmonad
     constraint _  = 'pc pc_constraint
-  type ('pc,'a) nm = ('p,unit) monad
-    constraint _ = ('pc,'p,'a) cmonad_constraint
+  type 'pc nm = ('p,unit) monad
+    constraint _ = ('pc,'p) cmonad_constraint
     constraint _ = 'pc pc_constraint
-  val rowrep : 'a ira -> 'a ira -> 'a fra
-  val colrep : 'a ira -> 'a ira -> 'a fra
-  val decl : ('a, int) abstract -> ('pc,'a) nm
-  val add : 'a fra -> 
-    (<classif : 'a; state : [> `TPivot of 'a lstate ]; ..>, unit) omonad
+  val rowrep : ira -> ira -> fra
+  val colrep : ira -> ira -> fra
+  val decl : int abstract -> 'pc nm
+  val add : fra -> (<state : [> `TPivot of lstate ]; ..>, unit) omonad
   val fin : unit -> ('b,perm_rep) lm
 end
 
@@ -218,16 +197,16 @@ end
 module PivotCommon(PK:PIVOTKIND) = 
   struct
   type perm_rep = PK.perm_rep
-  type 'a ira = 'a PK.ira
-  type 'a fra = 'a PK.fra
-  type 'a pra = 'a PK.pra
-  type 'a lstate = ('a, PK.perm_rep ref) abstract
+  type ira = PK.ira
+  type fra = PK.fra
+  type pra = PK.pra
+  type lstate = PK.perm_rep ref abstract
   type 'pc pc_constraint = unit
-    constraint 'pc = <state : [> `TPivot of 'a lstate ]; classif : 'a; ..>
+    constraint 'pc = <state : [> `TPivot of lstate ]; ..>
   type ('pc,'v) lm = ('pc,'v) cmonad
     constraint _  = 'pc pc_constraint
-  type ('pc,'a) nm = ('p,unit) monad
-    constraint _ = ('pc,'p,'a) cmonad_constraint
+  type 'pc nm = ('p,unit) monad
+    constraint _ = ('pc,'p) cmonad_constraint
     constraint _ = 'pc pc_constraint
   let rowrep = PK.rowrep
   let colrep = PK.colrep
@@ -266,29 +245,28 @@ end
 module GenLA(C:CONTAINER2D) = struct
 
 (* Bundle up some information, helps abstract some argument lists *)
-type 'a wmatrix = {matrix: 'a C.vc; numrow: ('a,int) abstract; 
-                   numcol: ('a,int) abstract}
-type 'a curpos  = {rowpos: ('a, int) abstract; colpos: ('a, int) abstract}
-type 'a curposval = {p: 'a curpos; curval: ('a, C.Dom.v) abstract}
+type wmatrix = {matrix: C.vc; numrow: int abstract; numcol: int abstract}
+type curpos  = {rowpos: int abstract; colpos: int abstract}
+type curposval = {p: curpos; curval: C.Dom.v abstract}
 
 module type DETERMINANT = sig
   type tdet = C.Dom.v ref
-  type 'a lstate
+  type lstate
   type 'pc pc_constraint = unit
-    constraint 'pc = <state : [> `TDet of 'a lstate ]; classif : 'a; ..>
+    constraint 'pc = <state : [> `TDet of lstate ]; ..>
   type ('pc,'v) lm = ('pc,'v) cmonad
     constraint _  = 'pc pc_constraint
   type ('pc,'v) om = ('pc,'v) omonad
     constraint _  = 'pc pc_constraint
   type 'pc nm = ('p,unit) monad
-    constraint _ = ('pc,'p,_) cmonad_constraint
+    constraint _ = ('pc,'p) cmonad_constraint
     constraint _ = 'pc pc_constraint
   val decl : unit -> 'b nm (* no code is generated *)
   val upd_sign  : unit -> ('b,unit) om
   val zero_sign : unit -> ('b,unit) lm
-  val acc_magn  : ('a,C.Dom.v) abstract -> (<classif : 'a; ..>,unit) lm
+  val acc_magn  : C.Dom.v abstract -> ('b,unit) lm
   val get_magn  : unit -> ('b,tdet) lm
-  val set_magn  : ('a,C.Dom.v) abstract -> (<classif : 'a; ..>,unit) lm
+  val set_magn  : C.Dom.v abstract -> ('b,unit) lm
   val fin       : unit -> ('b,C.Dom.v) lm
 end
 
@@ -296,12 +274,12 @@ end
    Naturally, when doing only GE, this is not needed at all, and should
    not generate any code *)
 module type LOWER = sig
-  type 'a lstate = ('a, C.contr) abstract
+  type lstate = C.contr abstract
   type ('pc,'v) lm = ('pc,'v) cmonad
-    constraint 'pc = <state : [> `TLower of 'a lstate ]; classif : 'a; ..>
-  val decl   : ('a, C.contr) abstract -> (<classif : 'a; ..>, C.contr) lm
-  val updt   : 'a C.vc -> ('a,int) abstract -> ('a,int) abstract -> 'a C.vo -> 
-            'a C.Dom.vc -> (<classif : 'a;..>, unit) lm option
+    constraint 'pc = <state : [> `TLower of lstate ]; ..>
+  val decl   : C.contr abstract -> ('b, C.contr) lm
+  val updt   : C.vc -> int abstract -> int abstract -> C.vo -> 
+            C.Dom.vc -> ('b, unit) lm option
   val fin    : unit -> ('a,  C.contr) lm
   val wants_pack : bool
 end
@@ -318,11 +296,10 @@ module type PIVOT =
     Return the value of the pivot option. Or zero?
     When we permute the rows of columns, we update the sign of the det.
  *)
- val findpivot : 'a wmatrix -> 'a curpos -> 
-   (<classif : 'a; 
-     state : [> `TDet of 'a D.lstate | `TPivot of 'a P.lstate ]; ..>, 
+ val findpivot : wmatrix -> curpos -> 
+   (<state : [> `TDet of D.lstate | `TPivot of P.lstate ]; ..>, 
     C.Dom.v option) cmonad
-(* [> 'a D.tag_lstate | 'a P.tag_lstate] *)
+(* [> D.tag_lstate | P.tag_lstate] *)
 end
 
 (* In the case of a non-fraction-free algorithm with no Det
@@ -333,7 +310,7 @@ end
 module NoDet : DETERMINANT =
   struct
   type tdet = C.Dom.v ref
-  type 'a lstate = unit
+  type lstate = unit
   let decl () = ret ()
   let upd_sign () = ret None
   let zero_sign () = unitL
@@ -342,13 +319,13 @@ module NoDet : DETERMINANT =
   let set_magn _ = unitL
   let fin () = failwith "Determinant is needed but not computed"
   type 'pc pc_constraint = unit
-    constraint 'pc = <state : [> `TDet of 'a lstate ]; classif : 'a; ..>
+    constraint 'pc = <state : [> `TDet of lstate ]; ..>
   type ('pc,'v) lm = ('pc,'v) cmonad
     constraint _  = 'pc pc_constraint
   type ('pc,'v) om = ('pc,'v) omonad
     constraint _  = 'pc pc_constraint
   type 'pc nm = ('p,unit) monad
-    constraint _ = ('pc,'p,_) cmonad_constraint
+    constraint _ = ('pc,'p) cmonad_constraint
     constraint _ = 'pc pc_constraint
 end
 
@@ -358,19 +335,19 @@ module AbstractDet : DETERMINANT =
   type tdet = v ref
   (* the first part of the state is an integer: which is +1, 0, -1:
      the sign of the determinant *)
-  type 'a lstate = ('a,int ref) abstract * ('a,tdet) abstract
+  type lstate = int ref abstract * tdet abstract
   type 'pc pc_constraint = unit
-    constraint 'pc = <state : [> `TDet of 'a lstate ]; classif : 'a; ..>
+    constraint 'pc = <state : [> `TDet of lstate ]; ..>
   type ('pc,'v) lm = ('pc,'v) cmonad
     constraint _  = 'pc pc_constraint
   type ('pc,'v) om = ('pc,'v) omonad
     constraint _  = 'pc pc_constraint
   type 'pc nm = ('p,unit) monad
-    constraint _ = ('pc,'p,_) cmonad_constraint
+    constraint _ = ('pc,'p) cmonad_constraint
     constraint _ = 'pc pc_constraint
   let ip = (fun x -> `TDet x), (function `TDet x -> Some x | _ -> None), "Det"
 (* check later: XXX
-  include Foo(struct type 'a tags = private [> `TDet of 'a lstate ] end)
+  include Foo(struct type tags = private [> `TDet of lstate ] end)
 *)
   let decl () = 
       let! magn = retN (liftRef oneL) in    (* track magnitude *)
@@ -395,18 +372,18 @@ end
 
 module type UPDATE =
         functor(D:DETERMINANT) -> sig
-        type 'a in_val = 'a C.Dom.vc
+        type in_val = C.Dom.vc
         val update : 
-            'a in_val -> 'a in_val -> 'a in_val -> 'a in_val -> 
-          ('a in_val -> ('a, unit) abstract) ->
-          ('a, C.Dom.v ref) abstract -> 
-          (<classif : 'a; ..>, unit) cmonad
-        val update_det : 'a in_val -> (<classif : 'a; ..>,unit) D.lm
+            in_val -> in_val -> in_val -> in_val -> 
+          (in_val -> unit abstract) ->
+          C.Dom.v ref abstract -> 
+          ('b, unit) cmonad
+        val update_det : in_val -> ('b,unit) D.lm
 (* this is only needed if we try to deal with FractionFree LU,
    which is really tough, especially since the L Matrix still has
    to be over the fraction field, which we don't have available.
         val update_lower : 
-            'a in_val -> 'a in_val -> 'a in_val -> 'a in_val -> 
+            in_val -> in_val -> in_val -> in_val -> 
           ('a, C.Dom.v ref) abstract -> ('a, C.Dom.v, 's, 'w) cmonad *)
         val upd_kind : update_kind
 end
@@ -419,7 +396,7 @@ module GE = struct
 module DivisionUpdate(Det:DETERMINANT) =
   struct
   open C.Dom
-  type 'a in_val = 'a vc
+  type in_val = vc
   let update bic brc brk bik setter _ = 
       let! y = ret (bik -^ ((divL bic brc) *^ brk)) in
       ret (setter (applyMaybe normalizerL y))
@@ -435,7 +412,7 @@ end
 
 module FractionFreeUpdate(Det:DETERMINANT) = struct
   open C.Dom
-  type 'a in_val = 'a vc
+  type in_val = vc
   let update bic brc brk bik setter d =
       let! z = ret ((bik *^ brc) -^ (brk *^ bic)) in
       let! t = ret (applyMaybe normalizerL z) in
@@ -454,9 +431,9 @@ end
 (* Do we keep the lower part? *)
 module TrackLower = 
   struct
-  type 'a lstate = ('a, C.contr) abstract
+  type lstate = C.contr abstract
   type ('pc,'v) lm = ('pc,'v) cmonad
-    constraint 'pc = <state : [> `TLower of 'a lstate ]; classif : 'a; ..>
+    constraint 'pc = <state : [> `TLower of lstate ]; ..>
   let ip = (fun x -> `TLower x), (function `TLower x -> Some x | _ -> None), 
            "TrackLower"
 end
@@ -505,9 +482,8 @@ end
 
 module type INPUT = sig
     type inp
-    val get_input : ('a, inp) abstract ->
-    (<classif : 'a; ..>, ('a, C.contr) abstract * ('a, int) abstract * bool)
-   monad
+    val get_input : inp abstract ->
+      ('b, C.contr abstract * int abstract * bool) monad
 end 
 
 (* What is the input *)
@@ -759,15 +735,15 @@ end
 module type OUTPUT = functor(OD : OUTPUTDEP) -> sig
   module IF : INTERNAL_FEATURES
   type res
-  val make_result : 'a wmatrix ->
-   (<classif : 'a; 
-     state : [> `TDet of 'a OD.Det.lstate |
-                'a IF.R.tag_lstate |
-                `TPivot of 'a IF.P.lstate |
-                `TLower of 'a IF.L.lstate]; ..>,res) cmonad
+  val make_result : wmatrix ->
+   (<
+     state : [> `TDet of OD.Det.lstate |
+                IF.R.tag_lstate |
+                `TPivot of IF.P.lstate |
+                `TLower of IF.L.lstate]; ..>,res) cmonad
    (*
-    ('a,res,[> 'a OD.Det.tag_lstate | 'a IF.R.tag_lstate 
-             | 'a IF.P.tag_lstate   | 'a IF.L.tag_lstate],'w) cmonad
+    ('a,res,[> OD.Det.tag_lstate | IF.R.tag_lstate 
+             | IF.P.tag_lstate   | IF.L.tag_lstate],'w) cmonad
       *)
 end
 
@@ -863,8 +839,7 @@ module Solve = struct
 module type INPUT = sig
     type inp
     type rhs = C.contr
-    val get_input : ('a, inp) abstract ->
-      (<classif : 'a;..>, ('a, C.contr) abstract * ('a, rhs) abstract) monad
+    val get_input : inp abstract -> ('b, C.contr abstract * rhs abstract) monad
 end 
 
 (* What is the input *)
@@ -880,9 +855,9 @@ end
 
 module type OUTPUT = sig
   type res
-  val make_result : ('a, C.contr) abstract -> ('a, C.contr) abstract ->
-      ('a, int) abstract -> ('a, int) abstract -> ('a, int) abstract ->
-      (<classif : 'a;..>, res) cmonad
+  val make_result : C.contr abstract -> C.contr abstract ->
+      int abstract -> int abstract -> int abstract ->
+      ('b, res) cmonad
 end
 
 module OutJustAnswer = struct
