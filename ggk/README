@@ -1,0 +1,43 @@
+
+Build
+=====
+
+To build code and tests please use 'make all'. This will build:
+
+1. ggk.top: the ocaml top-level interpreter containing GGK sources.
+2. Code generation testcases under ctest/.
+
+Usage
+=====
+
+The top-level interpreter 'ggk.top' can be started with the appropriate
+includes as follows (from the root directory of the code):
+
+    $ ./ggk.top -I src/
+
+This will start the interpreter with all the modules visible.
+
+Here is an example session showing the integer module in action:
+
+    $ ./ggk.top -I src/
+        Objective Caml version 3.09.1
+
+    # let a = Integer.Integer_Ring.zero;;
+    val a : int = 0
+    # Integer.Integer_Ring.add_s (Staged.of_immediate 0)
+                                    (Staged.of_atom .<4>.);;
+    - : ('a, int) Staged.staged =
+    Staged.Later {Staged.c = .<4>.; Staged.a = true}
+    # exit 0;;
+
+
+Code Tests
+==========
+
+The code generation tests (hereby: ctests) are under ctest/. The main
+Makefile builds the ctests. Individual build can be done by issuing
+'make' from the shell under ctest/.
+
+The test files are named <module>_test.ml and their corresponding output
+files <module>_out.ml. For example: vector_test.ml and vector_out.ml.
+
