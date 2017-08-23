@@ -20,6 +20,6 @@ test: all
          || (echo 'test failed'; exit 1)
 
 clean:
-	rm -f mytop *.cmi *.cmo
+	rm -f mytop *.cmi *.cmo test.out
 
 .PHONY: all clean check-compiler test
