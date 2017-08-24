@@ -18,33 +18,3 @@ sig
   val normalizerf : (v -> v) exp option
   val normalizerg : v exp -> v exp
 end 
-
-module Float : S
-     with type kind = field
-      and type v = float
-      and type 'a exp = 'a
-
-module FloatCode : S
-     with type kind = field
-      and type v = float
-      and type 'a exp = 'a code
-
-module Integer : S
-     with type kind = ring
-      and type v = int
-      and type 'a exp = 'a
-
-module IntegerCode : S
-     with type kind = ring
-      and type v = int
-      and type 'a exp = 'a code
-
-module Rational : S
-     with type kind = field
-      and type v = Num.num
-      and type 'a exp = 'a
-
-module RationalCode : S
-     with type kind = field
-      and type v = Num.num
-      and type 'a exp = 'a code
