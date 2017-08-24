@@ -2,6 +2,8 @@ open Prelude
 open CodePrelude
 open Domains
 
+(* The Code version is _primary_, in the sense that we will
+  obtain the Direct version from it. *)
 module FloatCode = struct
   type v = float
   type kind = field
@@ -18,6 +20,7 @@ module FloatCode = struct
   let normalizerg = fun x -> x
 end
 
+(* This version is now obviously consistent with the above *)
 module Float = struct
   type v = float
   type kind = field
