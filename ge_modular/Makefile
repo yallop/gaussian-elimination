@@ -17,11 +17,11 @@ simplify.cmo: simplify.ml staged.cmo
 	metaocamlc -g -c -short-paths \
            simplify.ml
 
-prelude.cmo: prelude.ml
+prelude.cmo: prelude.ml prelude.mli
 	metaocamlc -g -c -short-paths \
 	  prelude.mli prelude.ml
 
-codePrelude.cmo: codePrelude.ml
+codePrelude.cmo: codePrelude.ml codePrelude.mli
 	metaocamlc -g -c -short-paths \
 	  codePrelude.mli codePrelude.ml
 
