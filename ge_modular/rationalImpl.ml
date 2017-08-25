@@ -9,6 +9,7 @@ module RationalCode = struct
 
   let zero      = let zero = Num.num_of_int 0 in .< zero >.
   let one       = let one = Num.num_of_int 1 in .< one >.
+  let negone    = let negone = Num.num_of_int (-1) in .< negone >.
   let plus x y  = .<Num.add_num .~x .~y >.
   let times x y = .<Num.mult_num .~x .~y>.
   let minus x y = .<Num.sub_num .~x .~y>.
@@ -26,6 +27,7 @@ module Rational = struct
 
   let zero        = run0 RationalCode.zero
   let one         = run0 RationalCode.one
+  let negone      = run0 RationalCode.negone
   let plus        = run2 RationalCode.plus
   let times       = run2 RationalCode.times
   let minus       = run2 RationalCode.minus

@@ -9,6 +9,7 @@ sig
   type _ exp
   val zero : v exp
   val one : v exp
+  val negone : v exp
   val plus : v exp -> v exp -> v exp
   val times : v exp -> v exp -> v exp
   val minus : v exp -> v exp -> v exp

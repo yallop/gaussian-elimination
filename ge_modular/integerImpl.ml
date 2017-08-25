@@ -7,8 +7,9 @@ module IntegerCode = struct
   type kind   = ring
   type 'a exp = 'a code
 
-  let zero      = .< 0 >.
-  let one       = .< 1 >.
+  let zero      = .<  0 >.
+  let one       = .<  1 >.
+  let negone    = .< -1 >.
   let plus x y  = .<.~x + .~y>.
   let times x y = .<.~x * .~y>.
   let minus x y = .<.~x - .~y>.
@@ -26,6 +27,7 @@ module Integer = struct
 
   let zero        = run0 IntegerCode.zero
   let one         = run0 IntegerCode.one
+  let negone      = run0 IntegerCode.negone
   let plus        = run2 IntegerCode.plus
   let times       = run2 IntegerCode.times
   let minus       = run2 IntegerCode.minus
