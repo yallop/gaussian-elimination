@@ -1,9 +1,10 @@
 # OPAM switch: 4.04.0+BER
 
 UTIL=prelude.cmo codePrelude.cmo
-TIMPL=floatImpl.cmo integerImpl.cmo rationalImpl.cmo
+INFRA=domains.cmo staged.cmo simplify.cmo
+TIMPL=floatImpl.cmo integerImpl.cmo rationalImpl.cmo zpImpl.cmo
 
-all: check-compiler $(UTIL) domains.cmo staged.cmo $(TIMPL) simplify.cmo
+all: check-compiler $(UTIL) $(INFRA) $(TIMPL)
 
 check-compiler:
 	@test $$(opam switch  show) = "4.03.0+effects-ber" \
@@ -36,6 +37,11 @@ integerImpl.cmo: prelude.cmo staged.cmo domains.cmo integerImpl.mli integerImpl.
 rationalImpl.cmo: prelude.cmo staged.cmo domains.cmo rationalImpl.mli rationalImpl.ml
 	metaocamlc -g -c -short-paths \
            rationalImpl.mli rationalImpl.ml
+
+# FIXME: make a .mli for this as well
+zpImpl.cmo: prelude.cmo staged.cmo domains.cmo zpImpl.ml
+	metaocamlc -g -c -short-paths \
+           zpImpl.ml
 
 domains.cmo: domains.mli domains.ml
 	metaocamlc -g -c -short-paths \
