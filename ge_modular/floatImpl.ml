@@ -53,13 +53,14 @@ module FloatStaged = struct
   type kind       = FloatCode.kind
   type 'a exp     = 'a staged         (* difference here *)
 
-  let zero      = Staged.of_atom Float.zero
-  let one       = Staged.of_atom Float.one
-  let plus  a b = monoid Float.zero Float.plus FloatCode.plus (a,b)
-  let uminus    = Staged.unary Float.uminus FloatCode.uminus
-  let minus     = inverse Float.zero uminus Float.minus FloatCode.minus
-  let times     = ring Float.zero Float.one Float.negone uminus Float.times FloatCode.times
-  let inv       = Staged.unary Float.inv FloatCode.inv
-  let div       = inverse Float.one inv Float.div FloatCode.div
+  let zero        = Staged.of_atom Float.zero
+  let one         = Staged.of_atom Float.one
+  let plus  a b   = monoid Float.zero Float.plus FloatCode.plus (a,b)
+  let uminus      = Staged.unary Float.uminus FloatCode.uminus
+  let minus       = inverse Float.zero uminus Float.minus FloatCode.minus
+  let times       = ring Float.zero Float.one Float.negone uminus Float.times FloatCode.times
+  let inv         = Staged.unary Float.inv FloatCode.inv
+  let div         = inverse Float.one inv Float.div FloatCode.div
+  let better_than = maybe_apply2 Staged.binary Float.better_than FloatCode.better_than
 end
 

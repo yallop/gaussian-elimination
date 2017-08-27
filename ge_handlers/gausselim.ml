@@ -5,9 +5,6 @@ let liftRef x = .< ref .~x >.
 let liftGet x = .< ! .~x >. 
 let liftPair x = (.< fst .~x >., .< snd .~x >.)
 let liftPPair x = (.< fst (fst .~x) >., .< snd (fst .~x) >., .< snd .~x >.)
-let rec find f = function
-    [] -> raise Not_found
-  | h :: t -> match f h with Some x -> x | None -> find f t
 effect GenLet : 'a code -> 'a code
 
 let handle f =
