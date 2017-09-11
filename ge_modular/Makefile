@@ -38,10 +38,9 @@ rationalImpl.cmo: prelude.cmo staged.cmo domains.cmo rationalImpl.mli rationalIm
 	metaocamlc -g -c -short-paths \
            rationalImpl.mli rationalImpl.ml
 
-# FIXME: make a .mli for this as well
-zpImpl.cmo: prelude.cmo staged.cmo domains.cmo zpImpl.ml
+zpImpl.cmo: prelude.cmo staged.cmo domains.cmo zpImpl.mli zpImpl.ml
 	metaocamlc -g -c -short-paths \
-           zpImpl.ml
+           zpImpl.mli zpImpl.ml
 
 domains.cmo: domains.mli domains.ml
 	metaocamlc -g -c -short-paths \

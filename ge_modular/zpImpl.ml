@@ -28,6 +28,7 @@ module ZpMakeCode = functor(P:sig val p:int end) -> struct
   type v  = int
   type kind = field
   type vc = v code
+  type 'a exp = 'a code
 
   let zero      = .< 0 >.  
   let one       = .< 1 >. 
@@ -41,7 +42,7 @@ module ZpMakeCode = functor(P:sig val p:int end) -> struct
   let div x y   = .< fst (extended_gcd .~x .~y) >.
 
   let normalizerf  = None
-  let normalizerg  = None
+  let normalizerg  = fun x -> x
   let better_than  = None
 end
 
