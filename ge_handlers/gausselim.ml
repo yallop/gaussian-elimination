@@ -308,7 +308,11 @@ module NoDet(Dom:DOMAIN) =
   let fin _ = .< () >.
 end
 
-module AbstractDet(Dom: DOMAIN) =
+module AbstractDet(Dom: DOMAIN)
+  : DETERMINANT with type indet = DetTypes(Dom).indet
+                 and type outdet = DetTypes(Dom).outdet
+                 and type tdet = DetTypes(Dom).tdet
+                 and type lstate = DetTypes(Dom).lstate =
   struct
   module TD = DetTypes(Dom)
   type indet = TD.indet
@@ -354,8 +358,12 @@ end
 (* What is the update formula? *)
 module DivisionUpdate
     (Ctr:CONTAINER2D with type Dom.kind = domain_is_field)
-    (Det:DETERMINANT with type indet=Ctr.Dom.v) = 
-  struct
+    (Det:DETERMINANT with type indet=Ctr.Dom.v)
+: UPDATE with type baseobj = Det.indet
+          and type ctr = Ctr.contr
+          and type idx = int code
+          and module D = Det =
+struct
   module Dom = Ctr.Dom
   type baseobj = Det.indet
   type ctr = Ctr.contr
@@ -374,7 +382,8 @@ module DivisionUpdate
 end
 
 module FractionFreeUpdate(Ctr:CONTAINER2D)
-    (Det:DETERMINANT with type indet=Ctr.Dom.v and type outdet=Ctr.Dom.v) =
+    (Det:DETERMINANT with type indet=Ctr.Dom.v
+                      and type outdet=Ctr.Dom.v) =
   struct
   module Dom = Ctr.Dom
   type baseobj = Dom.v
