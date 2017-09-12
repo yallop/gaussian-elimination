@@ -3,8 +3,8 @@ BER MetaOCaml toplevel, version N 102
 
 # # #       val ( !. ) : 'a code -> 'a = <fun>
 val resFA1 :
-  (Gausselim.GenFA1.Ctr.contr ->
-   Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.NoDet(Gausselim.FloatDomain)).res)
+  (Gausselim.FloatArray.contr ->
+   Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.NoDet(Gausselim.FloatDomain)).res)
   code = .<
   fun a_1  ->
     let t_2 = Pervasives.ref 0 in
@@ -69,8 +69,8 @@ val resFA1 :
     t_5>.
   
 # val resFA2 :
-  (Gausselim.GenFA2.Ctr.contr ->
-   Gausselim.OutDet(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.FDet).res)
+  (Gausselim.FloatArray.contr ->
+   Gausselim.OutDet(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.FDet).res)
   code = .<
   fun a_20  ->
     let t_21 = Pervasives.ref 0 in
@@ -141,8 +141,8 @@ val resFA1 :
        else if (! t_28) = 1 then ! t_27 else -. (! t_27)))>.
   
 # val resFA3 :
-  (Gausselim.GenFA3.Ctr.contr ->
-   Gausselim.OutRank(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.Rank).res)
+  (Gausselim.FloatArray.contr ->
+   Gausselim.OutRank(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.Rank).res)
   code = .<
   fun a_41  ->
     let t_42 = Pervasives.ref 0 in
@@ -208,8 +208,8 @@ val resFA1 :
     (t_45, (! t_42))>.
   
 # val resFA4 :
-  (Gausselim.GenFA4.Ctr.contr ->
-   Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.FDet)(Gausselim.Rank).res)
+  (Gausselim.FloatArray.contr ->
+   Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.FDet)(Gausselim.Rank).res)
   code = .<
   fun a_60  ->
     let t_61 = Pervasives.ref 0 in
@@ -280,8 +280,8 @@ val resFA1 :
        else if (! t_68) = 1 then ! t_67 else -. (! t_67)), (! t_61))>.
   
 # val resFV1 :
-  (Gausselim.GenFV1.Ctr.contr ->
-   Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.GenericVectorContainer)(Gausselim.FDet).res)
+  (Gausselim.FloatVector.contr ->
+   Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.FloatVector)(Gausselim.FDet).res)
   code = .<
   fun a_81  ->
     let t_82 = Pervasives.ref 0 in
@@ -369,8 +369,8 @@ val resFA1 :
     t_84>.
   
 # val resFV2 :
-  (Gausselim.GenFV2.Ctr.contr ->
-   Gausselim.OutDet(Gausselim.FloatDomain)(Gausselim.GenericVectorContainer)(Gausselim.FDet).res)
+  (Gausselim.FloatVector.contr ->
+   Gausselim.OutDet(Gausselim.FloatDomain)(Gausselim.FloatVector)(Gausselim.FDet).res)
   code = .<
   fun a_107  ->
     let t_108 = Pervasives.ref 0 in
@@ -463,8 +463,8 @@ val resFA1 :
        else if (! t_114) = 1 then ! t_113 else -. (! t_113)))>.
   
 # val resFV3 :
-  (Gausselim.GenFV3.Ctr.contr ->
-   Gausselim.OutRank(Gausselim.FloatDomain)(Gausselim.GenericVectorContainer)(Gausselim.Rank).res)
+  (Gausselim.FloatVector.contr ->
+   Gausselim.OutRank(Gausselim.FloatDomain)(Gausselim.FloatVector)(Gausselim.Rank).res)
   code = .<
   fun a_133  ->
     let t_134 = Pervasives.ref 0 in
@@ -552,8 +552,8 @@ val resFA1 :
     (t_136, (! t_134))>.
   
 # val resFV4 :
-  (Gausselim.GenFV4.Ctr.contr ->
-   Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.GenericVectorContainer)(Gausselim.FDet)(Gausselim.Rank).res)
+  (Gausselim.FloatVector.contr ->
+   Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.FloatVector)(Gausselim.FDet)(Gausselim.Rank).res)
   code = .<
   fun a_157  ->
     let t_158 = Pervasives.ref 0 in
@@ -646,8 +646,8 @@ val resFA1 :
        else if (! t_164) = 1 then ! t_163 else -. (! t_163)), (! t_158))>.
   
 # val resFV5 :
-  (Gausselim.GenFV5.Ctr.contr ->
-   Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.GenericVectorContainer)(Gausselim.FDet)(Gausselim.Rank).res)
+  (Gausselim.FloatVector.contr ->
+   Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.FloatVector)(Gausselim.FDet)(Gausselim.Rank).res)
   code = .<
   fun a_183  ->
     let t_184 = Pervasives.ref 0 in
@@ -760,8 +760,8 @@ val resFA1 :
        else if (! t_190) = 1 then ! t_189 else -. (! t_189)), (! t_184))>.
   
 # val resIA1 :
-  (Gausselim.GenIA1.Ctr.contr ->
-   Gausselim.OutJustMatrix(Gausselim.IntegerDomain)(Gausselim.GenericArrayContainer)(Gausselim.IDet).res)
+  (Gausselim.IntegerArray.contr ->
+   Gausselim.OutJustMatrix(Gausselim.IntegerDomain)(Gausselim.IntegerArray)(Gausselim.IDet).res)
   code = .<
   fun a_217  ->
     let t_218 = Pervasives.ref 0 in
@@ -834,8 +834,8 @@ val resFA1 :
     t_221>.
   
 # val resIA2 :
-  (Gausselim.GenIA2.Ctr.contr ->
-   Gausselim.OutDet(Gausselim.IntegerDomain)(Gausselim.GenericArrayContainer)(Gausselim.IDet).res)
+  (Gausselim.IntegerArray.contr ->
+   Gausselim.OutDet(Gausselim.IntegerDomain)(Gausselim.IntegerArray)(Gausselim.IDet).res)
   code = .<
   fun a_238  ->
     let t_239 = Pervasives.ref 0 in
@@ -911,8 +911,8 @@ val resFA1 :
        else if (! t_246) = 1 then ! t_245 else - (! t_245)))>.
   
 # val resIA3 :
-  (Gausselim.GenIA3.Ctr.contr ->
-   Gausselim.OutRank(Gausselim.IntegerDomain)(Gausselim.GenericArrayContainer)(Gausselim.Rank).res)
+  (Gausselim.IntegerArray.contr ->
+   Gausselim.OutRank(Gausselim.IntegerDomain)(Gausselim.IntegerArray)(Gausselim.Rank).res)
   code = .<
   fun a_259  ->
     let t_260 = Pervasives.ref 0 in
@@ -985,8 +985,8 @@ val resFA1 :
     (t_263, (! t_260))>.
   
 # val resIA4 :
-  (Gausselim.GenIA4.Ctr.contr ->
-   Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.GenericArrayContainer)(Gausselim.IDet)(Gausselim.Rank).res)
+  (Gausselim.IntegerArray.contr ->
+   Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.IntegerArray)(Gausselim.IDet)(Gausselim.Rank).res)
   code = .<
   fun a_280  ->
     let t_281 = Pervasives.ref 0 in
@@ -1062,8 +1062,8 @@ val resFA1 :
        else if (! t_288) = 1 then ! t_287 else - (! t_287)), (! t_281))>.
   
 # val resIV1 :
-  (Gausselim.GenIV1.Ctr.contr ->
-   Gausselim.OutJustMatrix(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.NoDet(Gausselim.IntegerDomain)).res)
+  (Gausselim.IntegerVector.contr ->
+   Gausselim.OutJustMatrix(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.NoDet(Gausselim.IntegerDomain)).res)
   code = .<
   fun a_301  ->
     let t_302 = Pervasives.ref 0 in
@@ -1154,8 +1154,8 @@ val resFA1 :
     t_304>.
   
 # val resIV2 :
-  (Gausselim.GenIV2.Ctr.contr ->
-   Gausselim.OutDet(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.IDet).res)
+  (Gausselim.IntegerVector.contr ->
+   Gausselim.OutDet(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.IDet).res)
   code = .<
   fun a_327  ->
     let t_328 = Pervasives.ref 0 in
@@ -1249,8 +1249,8 @@ val resFA1 :
        else if (! t_334) = 1 then ! t_333 else - (! t_333)))>.
   
 # val resIV3 :
-  (Gausselim.GenIV3.Ctr.contr ->
-   Gausselim.OutRank(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.Rank).res)
+  (Gausselim.IntegerVector.contr ->
+   Gausselim.OutRank(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.Rank).res)
   code = .<
   fun a_353  ->
     let t_354 = Pervasives.ref 0 in
@@ -1341,8 +1341,8 @@ val resFA1 :
     (t_356, (! t_354))>.
   
 # val resIV4 :
-  (Gausselim.GenIV4.Ctr.contr ->
-   Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.IDet)(Gausselim.Rank).res)
+  (Gausselim.IntegerVector.contr ->
+   Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.IDet)(Gausselim.Rank).res)
   code = .<
   fun a_379  ->
     let t_380 = Pervasives.ref 0 in
@@ -1436,8 +1436,8 @@ val resFA1 :
        else if (! t_386) = 1 then ! t_385 else - (! t_385)), (! t_380))>.
   
 # val resIV5 :
-  (Gausselim.GenIV5.Ctr.contr ->
-   Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.IDet)(Gausselim.Rank).res)
+  (Gausselim.IntegerVector.contr ->
+   Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.IDet)(Gausselim.Rank).res)
   code = .<
   fun a_405  ->
     let t_406 = Pervasives.ref 0 in
@@ -1551,8 +1551,8 @@ val resFA1 :
        else if (! t_412) = 1 then ! t_411 else - (! t_411)), (! t_406))>.
   
 # val resFA11 :
-  (Gausselim.GenFA11.Ctr.contr ->
-   Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.NoDet(Gausselim.FloatDomain)).res)
+  (Gausselim.FloatArray.contr ->
+   Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.NoDet(Gausselim.FloatDomain)).res)
   code = .<
   fun a_439  ->
     let t_440 = Pervasives.ref 0 in
@@ -1639,8 +1639,8 @@ val resFA1 :
     t_443>.
   
 # val resFA12 :
-  (Gausselim.GenFA12.Ctr.contr ->
-   Gausselim.OutDet(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.FDet).res)
+  (Gausselim.FloatArray.contr ->
+   Gausselim.OutDet(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.FDet).res)
   code = .<
   fun a_461  ->
     let t_462 = Pervasives.ref 0 in
@@ -1732,8 +1732,8 @@ val resFA1 :
        else if (! t_469) = 1 then ! t_468 else -. (! t_468)))>.
   
 # val resFA13 :
-  (Gausselim.GenFA13.Ctr.contr ->
-   Gausselim.OutRank(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.Rank).res)
+  (Gausselim.FloatArray.contr ->
+   Gausselim.OutRank(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.Rank).res)
   code = .<
   fun a_485  ->
     let t_486 = Pervasives.ref 0 in
@@ -1820,8 +1820,8 @@ val resFA1 :
     (t_489, (! t_486))>.
   
 # val resFA14 :
-  (Gausselim.GenFA14.Ctr.contr ->
-   Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.FDet)(Gausselim.Rank).res)
+  (Gausselim.FloatArray.contr ->
+   Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.FDet)(Gausselim.Rank).res)
   code = .<
   fun a_507  ->
     let t_508 = Pervasives.ref 0 in
@@ -1913,8 +1913,8 @@ val resFA1 :
        else if (! t_515) = 1 then ! t_514 else -. (! t_514)), (! t_508))>.
   
 # val resRA1 :
-  (Gausselim.GenRA1.Ctr.contr ->
-   Gausselim.OutJustMatrix(Gausselim.RationalDomain)(Gausselim.GenericArrayContainer)(Gausselim.RDet).res)
+  (Gausselim.RationalArray.contr ->
+   Gausselim.OutJustMatrix(Gausselim.RationalDomain)(Gausselim.RationalArray)(Gausselim.RDet).res)
   code = .<
   fun a_553  ->
     let t_554 = Pervasives.ref 0 in
@@ -1987,8 +1987,8 @@ val resFA1 :
     t_557>.
   
 # val resRA2 :
-  (Gausselim.GenRA2.Ctr.contr ->
-   Gausselim.OutDet(Gausselim.RationalDomain)(Gausselim.GenericArrayContainer)(Gausselim.RDet).res)
+  (Gausselim.RationalArray.contr ->
+   Gausselim.OutDet(Gausselim.RationalDomain)(Gausselim.RationalArray)(Gausselim.RDet).res)
   code = .<
   fun a_575  ->
     let t_576 = Pervasives.ref 0 in
@@ -2064,8 +2064,8 @@ val resFA1 :
        else if (! t_583) = 1 then ! t_582 else Num.minus_num (! t_582)))>.
   
 # val resRA3 :
-  (Gausselim.GenRA3.Ctr.contr ->
-   Gausselim.OutRank(Gausselim.RationalDomain)(Gausselim.GenericArrayContainer)(Gausselim.Rank).res)
+  (Gausselim.RationalArray.contr ->
+   Gausselim.OutRank(Gausselim.RationalDomain)(Gausselim.RationalArray)(Gausselim.Rank).res)
   code = .<
   fun a_597  ->
     let t_598 = Pervasives.ref 0 in
@@ -2138,8 +2138,8 @@ val resFA1 :
     (t_601, (! t_598))>.
   
 # val resRA4 :
-  (Gausselim.GenRA4.Ctr.contr ->
-   Gausselim.OutDetRank(Gausselim.RationalDomain)(Gausselim.GenericArrayContainer)(Gausselim.RDet)(Gausselim.Rank).res)
+  (Gausselim.RationalArray.contr ->
+   Gausselim.OutDetRank(Gausselim.RationalDomain)(Gausselim.RationalArray)(Gausselim.RDet)(Gausselim.Rank).res)
   code = .<
   fun a_619  ->
     let t_620 = Pervasives.ref 0 in
@@ -2216,108 +2216,108 @@ val resFA1 :
       (! t_620))>.
   
 #   val rFA1 :
-  Gausselim.GenFA1.Ctr.contr ->
-  Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.NoDet(Gausselim.FloatDomain)).res =
+  Gausselim.FloatArray.contr ->
+  Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.NoDet(Gausselim.FloatDomain)).res =
   <fun>
 # val rFA2 :
-  Gausselim.GenFA2.Ctr.contr ->
-  Gausselim.OutDet(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.FDet).res =
+  Gausselim.FloatArray.contr ->
+  Gausselim.OutDet(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.FDet).res =
   <fun>
 # val rFA3 :
-  Gausselim.GenFA3.Ctr.contr ->
-  Gausselim.OutRank(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.Rank).res =
+  Gausselim.FloatArray.contr ->
+  Gausselim.OutRank(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.Rank).res =
   <fun>
 # val rFA4 :
-  Gausselim.GenFA4.Ctr.contr ->
-  Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.FDet)(Gausselim.Rank).res =
+  Gausselim.FloatArray.contr ->
+  Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.FDet)(Gausselim.Rank).res =
   <fun>
 # val rFV1 :
-  Gausselim.GenFV1.Ctr.contr ->
-  Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.GenericVectorContainer)(Gausselim.FDet).res =
+  Gausselim.FloatVector.contr ->
+  Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.FloatVector)(Gausselim.FDet).res =
   <fun>
 # val rFV2 :
-  Gausselim.GenFV2.Ctr.contr ->
-  Gausselim.OutDet(Gausselim.FloatDomain)(Gausselim.GenericVectorContainer)(Gausselim.FDet).res =
+  Gausselim.FloatVector.contr ->
+  Gausselim.OutDet(Gausselim.FloatDomain)(Gausselim.FloatVector)(Gausselim.FDet).res =
   <fun>
 # val rFV3 :
-  Gausselim.GenFV3.Ctr.contr ->
-  Gausselim.OutRank(Gausselim.FloatDomain)(Gausselim.GenericVectorContainer)(Gausselim.Rank).res =
+  Gausselim.FloatVector.contr ->
+  Gausselim.OutRank(Gausselim.FloatDomain)(Gausselim.FloatVector)(Gausselim.Rank).res =
   <fun>
 # val rFV4 :
-  Gausselim.GenFV4.Ctr.contr ->
-  Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.GenericVectorContainer)(Gausselim.FDet)(Gausselim.Rank).res =
+  Gausselim.FloatVector.contr ->
+  Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.FloatVector)(Gausselim.FDet)(Gausselim.Rank).res =
   <fun>
 # val rFV5 :
-  Gausselim.GenFV5.Ctr.contr ->
-  Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.GenericVectorContainer)(Gausselim.FDet)(Gausselim.Rank).res =
+  Gausselim.FloatVector.contr ->
+  Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.FloatVector)(Gausselim.FDet)(Gausselim.Rank).res =
   <fun>
 # val rIA1 :
-  Gausselim.GenIA1.Ctr.contr ->
-  Gausselim.OutJustMatrix(Gausselim.IntegerDomain)(Gausselim.GenericArrayContainer)(Gausselim.IDet).res =
+  Gausselim.IntegerArray.contr ->
+  Gausselim.OutJustMatrix(Gausselim.IntegerDomain)(Gausselim.IntegerArray)(Gausselim.IDet).res =
   <fun>
 # val rIA2 :
-  Gausselim.GenIA2.Ctr.contr ->
-  Gausselim.OutDet(Gausselim.IntegerDomain)(Gausselim.GenericArrayContainer)(Gausselim.IDet).res =
+  Gausselim.IntegerArray.contr ->
+  Gausselim.OutDet(Gausselim.IntegerDomain)(Gausselim.IntegerArray)(Gausselim.IDet).res =
   <fun>
 # val rIA3 :
-  Gausselim.GenIA3.Ctr.contr ->
-  Gausselim.OutRank(Gausselim.IntegerDomain)(Gausselim.GenericArrayContainer)(Gausselim.Rank).res =
+  Gausselim.IntegerArray.contr ->
+  Gausselim.OutRank(Gausselim.IntegerDomain)(Gausselim.IntegerArray)(Gausselim.Rank).res =
   <fun>
 # val rIA4 :
-  Gausselim.GenIA4.Ctr.contr ->
-  Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.GenericArrayContainer)(Gausselim.IDet)(Gausselim.Rank).res =
+  Gausselim.IntegerArray.contr ->
+  Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.IntegerArray)(Gausselim.IDet)(Gausselim.Rank).res =
   <fun>
 # val rIV1 :
-  Gausselim.GenIV1.Ctr.contr ->
-  Gausselim.OutJustMatrix(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.NoDet(Gausselim.IntegerDomain)).res =
+  Gausselim.IntegerVector.contr ->
+  Gausselim.OutJustMatrix(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.NoDet(Gausselim.IntegerDomain)).res =
   <fun>
 # val rIV2 :
-  Gausselim.GenIV2.Ctr.contr ->
-  Gausselim.OutDet(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.IDet).res =
+  Gausselim.IntegerVector.contr ->
+  Gausselim.OutDet(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.IDet).res =
   <fun>
 # val rIV3 :
-  Gausselim.GenIV3.Ctr.contr ->
-  Gausselim.OutRank(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.Rank).res =
+  Gausselim.IntegerVector.contr ->
+  Gausselim.OutRank(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.Rank).res =
   <fun>
 # val rIV4 :
-  Gausselim.GenIV4.Ctr.contr ->
-  Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.IDet)(Gausselim.Rank).res =
+  Gausselim.IntegerVector.contr ->
+  Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.IDet)(Gausselim.Rank).res =
   <fun>
 # val rIV5 :
-  Gausselim.GenIV5.Ctr.contr ->
-  Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.IDet)(Gausselim.Rank).res =
+  Gausselim.IntegerVector.contr ->
+  Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.IDet)(Gausselim.Rank).res =
   <fun>
 # val rFA11 :
-  Gausselim.GenFA11.Ctr.contr ->
-  Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.NoDet(Gausselim.FloatDomain)).res =
+  Gausselim.FloatArray.contr ->
+  Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.NoDet(Gausselim.FloatDomain)).res =
   <fun>
 # val rFA12 :
-  Gausselim.GenFA12.Ctr.contr ->
-  Gausselim.OutDet(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.FDet).res =
+  Gausselim.FloatArray.contr ->
+  Gausselim.OutDet(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.FDet).res =
   <fun>
 # val rFA13 :
-  Gausselim.GenFA13.Ctr.contr ->
-  Gausselim.OutRank(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.Rank).res =
+  Gausselim.FloatArray.contr ->
+  Gausselim.OutRank(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.Rank).res =
   <fun>
 # val rFA14 :
-  Gausselim.GenFA14.Ctr.contr ->
-  Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.FDet)(Gausselim.Rank).res =
+  Gausselim.FloatArray.contr ->
+  Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.FDet)(Gausselim.Rank).res =
   <fun>
 # val rRA1 :
-  Gausselim.GenRA1.Ctr.contr ->
-  Gausselim.OutJustMatrix(Gausselim.RationalDomain)(Gausselim.GenericArrayContainer)(Gausselim.RDet).res =
+  Gausselim.RationalArray.contr ->
+  Gausselim.OutJustMatrix(Gausselim.RationalDomain)(Gausselim.RationalArray)(Gausselim.RDet).res =
   <fun>
 # val rRA2 :
-  Gausselim.GenRA2.Ctr.contr ->
-  Gausselim.OutDet(Gausselim.RationalDomain)(Gausselim.GenericArrayContainer)(Gausselim.RDet).res =
+  Gausselim.RationalArray.contr ->
+  Gausselim.OutDet(Gausselim.RationalDomain)(Gausselim.RationalArray)(Gausselim.RDet).res =
   <fun>
 # val rRA3 :
-  Gausselim.GenRA3.Ctr.contr ->
-  Gausselim.OutRank(Gausselim.RationalDomain)(Gausselim.GenericArrayContainer)(Gausselim.Rank).res =
+  Gausselim.RationalArray.contr ->
+  Gausselim.OutRank(Gausselim.RationalDomain)(Gausselim.RationalArray)(Gausselim.Rank).res =
   <fun>
 # val rRA4 :
-  Gausselim.GenRA4.Ctr.contr ->
-  Gausselim.OutDetRank(Gausselim.RationalDomain)(Gausselim.GenericArrayContainer)(Gausselim.RDet)(Gausselim.Rank).res =
+  Gausselim.RationalArray.contr ->
+  Gausselim.OutDetRank(Gausselim.RationalDomain)(Gausselim.RationalArray)(Gausselim.RDet)(Gausselim.Rank).res =
   <fun>
 #                                                   val ia0 : Gausselim.IntegerDomain.v array array = [|[|1|]|]
 val ia1 : Gausselim.IntegerDomain.v array array =
@@ -2334,28 +2334,28 @@ val ia5 : Gausselim.IntegerDomain.v array array list =
    [|[|1; 2; 3|]; [|4; 13; 5|]; [|-1; 3; 0|]; [|0; 0; 0|]|];
    [|[|0; 2; 3|]; [|0; 13; 5|]; [|0; 3; 0|]|]]
 val resI11 :
-  Gausselim.OutJustMatrix(Gausselim.IntegerDomain)(Gausselim.GenericArrayContainer)(Gausselim.IDet).res
+  Gausselim.OutJustMatrix(Gausselim.IntegerDomain)(Gausselim.IntegerArray)(Gausselim.IDet).res
   list =
   [[|[|1|]|]; [|[|1; 2; 3|]; [|0; 5; -7|]; [|0; 0; 50|]|];
    [|[|1; 2; 3; 0|]; [|0; 5; -7; 0|]; [|0; 0; 50; 0|]|];
    [|[|1; 2; 3|]; [|0; 5; -7|]; [|0; 0; 50|]; [|0; 0; 0|]|];
    [|[|0; 2; 3|]; [|0; 0; 10|]; [|0; 0; 0|]|]]
 # val resI12 :
-  Gausselim.OutDet(Gausselim.IntegerDomain)(Gausselim.GenericArrayContainer)(Gausselim.IDet).res
+  Gausselim.OutDet(Gausselim.IntegerDomain)(Gausselim.IntegerArray)(Gausselim.IDet).res
   list =
   [([|[|1|]|], 1); ([|[|1; 2; 3|]; [|0; 5; -7|]; [|0; 0; 50|]|], 50);
    ([|[|1; 2; 3; 0|]; [|0; 5; -7; 0|]; [|0; 0; 50; 0|]|], 50);
    ([|[|1; 2; 3|]; [|0; 5; -7|]; [|0; 0; 50|]; [|0; 0; 0|]|], 50);
    ([|[|0; 2; 3|]; [|0; 0; 10|]; [|0; 0; 0|]|], 0)]
 # val resI13 :
-  Gausselim.OutRank(Gausselim.IntegerDomain)(Gausselim.GenericArrayContainer)(Gausselim.Rank).res
+  Gausselim.OutRank(Gausselim.IntegerDomain)(Gausselim.IntegerArray)(Gausselim.Rank).res
   list =
   [([|[|1|]|], 1); ([|[|1; 2; 3|]; [|0; 5; -7|]; [|0; 0; 50|]|], 3);
    ([|[|1; 2; 3; 0|]; [|0; 5; -7; 0|]; [|0; 0; 50; 0|]|], 3);
    ([|[|1; 2; 3|]; [|0; 5; -7|]; [|0; 0; 50|]; [|0; 0; 0|]|], 3);
    ([|[|0; 2; 3|]; [|0; 0; 10|]; [|0; 0; 0|]|], 2)]
 # val resI14 :
-  Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.GenericArrayContainer)(Gausselim.IDet)(Gausselim.Rank).res
+  Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.IntegerArray)(Gausselim.IDet)(Gausselim.Rank).res
   list =
   [([|[|1|]|], 1, 1); ([|[|1; 2; 3|]; [|0; 5; -7|]; [|0; 0; 50|]|], 50, 3);
    ([|[|1; 2; 3; 0|]; [|0; 5; -7; 0|]; [|0; 0; 50; 0|]|], 50, 3);
@@ -2376,35 +2376,35 @@ val iv5 :
    {arr = [|1; 2; 3; 0; 4; 13; 5; 0; -1; 3; 0; 0|]; n = 3; m = 4};
    {arr = [|0; 2; 3; 0; 13; 5; 0; 3; 0|]; n = 3; m = 3}]
 val resI21 :
-  Gausselim.OutJustMatrix(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.NoDet(Gausselim.IntegerDomain)).res
+  Gausselim.OutJustMatrix(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.NoDet(Gausselim.IntegerDomain)).res
   list =
   [{arr = [|1|]; n = 1; m = 1};
    {arr = [|1; 2; 3; 0; 5; -7; 0; 0; 50|]; n = 3; m = 3};
    {arr = [|1; 2; 3; 0; 0; 5; -7; 0; 0; 0; 50; 0|]; n = 3; m = 4};
    {arr = [|0; 2; 3; 0; 0; 10; 0; 0; 0|]; n = 3; m = 3}]
 # val resI22 :
-  Gausselim.OutDet(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.IDet).res
+  Gausselim.OutDet(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.IDet).res
   list =
   [({arr = [|1|]; n = 1; m = 1}, 1);
    ({arr = [|1; 2; 3; 0; 5; -7; 0; 0; 50|]; n = 3; m = 3}, 50);
    ({arr = [|1; 2; 3; 0; 0; 5; -7; 0; 0; 0; 50; 0|]; n = 3; m = 4}, 50);
    ({arr = [|0; 2; 3; 0; 0; 10; 0; 0; 0|]; n = 3; m = 3}, 0)]
 # val resI23 :
-  Gausselim.OutRank(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.Rank).res
+  Gausselim.OutRank(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.Rank).res
   list =
   [({arr = [|1|]; n = 1; m = 1}, 1);
    ({arr = [|1; 2; 3; 0; 5; -7; 0; 0; 50|]; n = 3; m = 3}, 3);
    ({arr = [|1; 2; 3; 0; 0; 5; -7; 0; 0; 0; 50; 0|]; n = 3; m = 4}, 3);
    ({arr = [|0; 2; 3; 0; 0; 10; 0; 0; 0|]; n = 3; m = 3}, 2)]
 # val resI24 :
-  Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.IDet)(Gausselim.Rank).res
+  Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.IDet)(Gausselim.Rank).res
   list =
   [({arr = [|1|]; n = 1; m = 1}, 1, 1);
    ({arr = [|1; 2; 3; 0; 5; -7; 0; 0; 50|]; n = 3; m = 3}, 50, 3);
    ({arr = [|1; 2; 3; 0; 0; 5; -7; 0; 0; 0; 50; 0|]; n = 3; m = 4}, 50, 3);
    ({arr = [|0; 2; 3; 0; 0; 10; 0; 0; 0|]; n = 3; m = 3}, 0, 2)]
 # val resI25 :
-  Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.GenericVectorContainer)(Gausselim.IDet)(Gausselim.Rank).res
+  Gausselim.OutDetRank(Gausselim.IntegerDomain)(Gausselim.IntegerVector)(Gausselim.IDet)(Gausselim.Rank).res
   list =
   [({arr = [|1|]; n = 1; m = 1}, 1, 1);
    ({arr = [|1; 3; 2; 0; 3; 5; 0; 0; 50|]; n = 3; m = 3}, 50, 3);
@@ -2425,7 +2425,7 @@ val resI21 :
    [|[|1.; 2.; 3.|]; [|4.; 13.; 5.|]; [|-1.; 3.; 0.|]; [|0.; 0.; 0.|]|];
    [|[|0.; 2.; 3.|]; [|0.; 10.; 5.|]; [|0.; 3.; 0.|]|]]
 val resF1 :
-  Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.NoDet(Gausselim.FloatDomain)).res
+  Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.NoDet(Gausselim.FloatDomain)).res
   list =
   [[|[|1.|]|]; [|[|4.; 13.; 5.|]; [|0.; 6.25; 1.25|]; [|0.; 0.; 2.|]|];
    [|[|4.; 13.; 5.; 0.|]; [|0.; 6.25; 1.25; 0.|]; [|0.; 0.; 2.; 0.|]|];
@@ -2439,7 +2439,7 @@ val xxx : Gausselim.FloatDomain.v Gausselim_types.container2dfromvector list =
    {arr = [|1.; 2.; 3.; 4.; 13.; 5.; -1.; 3.; 0.; 0.; 0.; 0.|]; n = 4; m = 3};
    {arr = [|0.; 2.; 3.; 0.; 10.; 5.; 0.; 3.; 0.|]; n = 3; m = 3}]
 val resFV5 :
-  Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.GenericVectorContainer)(Gausselim.FDet)(Gausselim.Rank).res
+  Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.FloatVector)(Gausselim.FDet)(Gausselim.Rank).res
   list =
   [({arr = [|1.|]; n = 1; m = 1}, 1., 1);
    ({arr =
@@ -2459,7 +2459,7 @@ val resFV5 :
     50., 3);
    ({arr = [|10.; 5.; 0.; 0.; 2.; 0.; 0.; 0.; 0.|]; n = 3; m = 3}, 0., 2)]
 val resF11 :
-  Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.NoDet(Gausselim.FloatDomain)).res
+  Gausselim.OutJustMatrix(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.NoDet(Gausselim.FloatDomain)).res
   list =
   [[|[|1.|]|];
    [|[|13.; 5.; 4.|]; [|0.; 2.23076923076923084; 0.384615384615384581|];
@@ -2471,7 +2471,7 @@ val resF11 :
      [|0.; 0.; -1.72413793103448287|]; [|0.; 0.; 0.|]|];
    [|[|10.; 5.; 0.|]; [|0.; 2.; 0.|]; [|0.; 0.; 0.|]|]]
 # val resF12 :
-  Gausselim.OutDet(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.FDet).res
+  Gausselim.OutDet(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.FDet).res
   list =
   [([|[|1.|]|], 1.);
    ([|[|13.; 5.; 4.|]; [|0.; 2.23076923076923084; 0.384615384615384581|];
@@ -2486,7 +2486,7 @@ val resF11 :
     50.);
    ([|[|10.; 5.; 0.|]; [|0.; 2.; 0.|]; [|0.; 0.; 0.|]|], 0.)]
 # val resF13 :
-  Gausselim.OutRank(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.Rank).res
+  Gausselim.OutRank(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.Rank).res
   list =
   [([|[|1.|]|], 1);
    ([|[|13.; 5.; 4.|]; [|0.; 2.23076923076923084; 0.384615384615384581|];
@@ -2501,7 +2501,7 @@ val resF11 :
     3);
    ([|[|10.; 5.; 0.|]; [|0.; 2.; 0.|]; [|0.; 0.; 0.|]|], 2)]
 # val resF14 :
-  Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.GenericArrayContainer)(Gausselim.FDet)(Gausselim.Rank).res
+  Gausselim.OutDetRank(Gausselim.FloatDomain)(Gausselim.FloatArray)(Gausselim.FDet)(Gausselim.Rank).res
   list =
   [([|[|1.|]|], 1., 1);
    ([|[|13.; 5.; 4.|]; [|0.; 2.23076923076923084; 0.384615384615384581|];
@@ -2549,7 +2549,7 @@ val resF11 :
      [|Num.Int 0; Num.Int 13; Num.Int 5|];
      [|Num.Int 0; Num.Int 3; Num.Int 0|]|]]
 #   val resR11 :
-  Gausselim.OutJustMatrix(Gausselim.RationalDomain)(Gausselim.GenericArrayContainer)(Gausselim.RDet).res
+  Gausselim.OutJustMatrix(Gausselim.RationalDomain)(Gausselim.RationalArray)(Gausselim.RDet).res
   list =
   [[|[|Num.Int 1|]|];
    [|[|Num.Int 1; Num.Int 2; Num.Int 3|];
@@ -2566,7 +2566,7 @@ val resF11 :
      [|Num.Int 0; Num.Int 0; Num.Ratio <abstr>|];
      [|Num.Int 0; Num.Int 0; Num.Int 0|]|]]
 # val resR12 :
-  Gausselim.OutDet(Gausselim.RationalDomain)(Gausselim.GenericArrayContainer)(Gausselim.RDet).res
+  Gausselim.OutDet(Gausselim.RationalDomain)(Gausselim.RationalArray)(Gausselim.RDet).res
   list =
   [([|[|Num.Int 1|]|], Num.Int 1);
    ([|[|Num.Int 1; Num.Int 2; Num.Int 3|];
@@ -2587,7 +2587,7 @@ val resF11 :
       [|Num.Int 0; Num.Int 0; Num.Int 0|]|],
     Num.Int 0)]
 # val resR13 :
-  Gausselim.OutRank(Gausselim.RationalDomain)(Gausselim.GenericArrayContainer)(Gausselim.Rank).res
+  Gausselim.OutRank(Gausselim.RationalDomain)(Gausselim.RationalArray)(Gausselim.Rank).res
   list =
   [([|[|Num.Int 1|]|], 1);
    ([|[|Num.Int 1; Num.Int 2; Num.Int 3|];
@@ -2608,7 +2608,7 @@ val resF11 :
       [|Num.Int 0; Num.Int 0; Num.Int 0|]|],
     2)]
 # val resR14 :
-  Gausselim.OutDetRank(Gausselim.RationalDomain)(Gausselim.GenericArrayContainer)(Gausselim.RDet)(Gausselim.Rank).res
+  Gausselim.OutDetRank(Gausselim.RationalDomain)(Gausselim.RationalArray)(Gausselim.RDet)(Gausselim.Rank).res
   list =
   [([|[|Num.Int 1|]|], Num.Int 1, 1);
    ([|[|Num.Int 1; Num.Int 2; Num.Int 3|];
