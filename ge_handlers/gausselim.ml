@@ -526,10 +526,11 @@ module FDet = AbstractDet(FloatDomain)
 module IDet = AbstractDet(IntegerDomain)
 module RDet = AbstractDet(RationalDomain)
 
-module type PIVOT = 
-      functor (C: CONTAINER2D) ->
-        functor (D: DETERMINANT with type indet = C.Dom.v) -> 
+module type PIVOT =
 sig
+  module C: CONTAINER2D
+  module D: DETERMINANT with type indet = C.Dom.v
+
  (* Find the pivot within [r,m-1] rows and [c,(n-1)] columns
     of containrer b.
     If pivot is found, permute the matrix rows and columns so that the pivot
@@ -542,6 +543,11 @@ sig
    int code -> int code ->
    (C.Dom.v option) code
 end
+
+module type PIVOTF = 
+  functor (C: CONTAINER2D) ->
+  functor (D: DETERMINANT with type indet = C.Dom.v) -> 
+    PIVOT with module C := C and module D := D
 
 module RowPivot(Ctr: CONTAINER2D)
     (D: DETERMINANT with type indet = Ctr.Dom.v) =
@@ -642,7 +648,7 @@ struct
    let findpivot env b r m c n = .< Some (.~(Ctr.get env b r c)) >.
 end
 
-module Gen(Ctr: CONTAINER2D)(PivotF: PIVOT)
+module Gen(Ctr: CONTAINER2D)(PivotF: PIVOTF)
           (Update: UPDATE with type baseobj = Ctr.Dom.v
                            and type ctr = Ctr.contr)
           (Out: OUTPUT with type contr = Ctr.contr
