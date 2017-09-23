@@ -3,8 +3,9 @@
 UTIL=prelude.cmo codePrelude.cmo
 INFRA=domains.cmo staged.cmo simplify.cmo
 TIMPL=floatImpl.cmo integerImpl.cmo rationalImpl.cmo zpImpl.cmo
+CIMPL=genericArray.cmo
 
-all: check-compiler $(UTIL) $(INFRA) $(TIMPL)
+all: check-compiler $(UTIL) $(INFRA) $(TIMPL) $(CIMPL)
 
 check-compiler:
 	@test $$(opam switch  show) = "4.03.0+effects-ber" \
@@ -41,6 +42,14 @@ rationalImpl.cmo: prelude.cmo staged.cmo domains.cmo rationalImpl.mli rationalIm
 zpImpl.cmo: prelude.cmo staged.cmo domains.cmo zpImpl.mli zpImpl.ml
 	metaocamlc -g -c -short-paths \
            zpImpl.mli zpImpl.ml
+
+container.cmi: container.mli
+	metaocamlc -g -c -short-paths \
+           container.mli
+
+genericArray.cmo: domains.cmo genericArray.ml container.cmi
+	metaocamlc -g -c -short-paths \
+           genericArray.ml
 
 domains.cmo: domains.mli domains.ml
 	metaocamlc -g -c -short-paths \
