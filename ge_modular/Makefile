@@ -47,7 +47,11 @@ container.cmi: container.mli
 	metaocamlc -g -c -short-paths \
            container.mli
 
-genericArray.cmo: domains.cmo genericArray.ml container.cmi
+genericArray.cmi: genericArray.mli
+	metaocamlc -g -c -short-paths \
+           genericArray.mli
+
+genericArray.cmo: domains.cmo genericArray.cmi genericArray.ml container.cmi
 	metaocamlc -g -c -short-paths \
            genericArray.ml
 
